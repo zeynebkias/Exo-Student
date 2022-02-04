@@ -74,7 +74,7 @@ exoController.deleteExo = async function (req, res) {
 
 
 
-actorsController.getExo = async function (req, res) {
+exoController.getExo = async function (req, res) {
   console.log("GET /Exos/:id");
   let exo;
   try {
