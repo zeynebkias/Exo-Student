@@ -1,16 +1,18 @@
 const Exo = require("../Models/exo.model");
+const Student = require("../Models/student.model");
 const exoController = {};
 
 
 exoController.createExo = async function (req, res) {
   const exo = new Exo ({
-    guid : req.params.guid,
+    guid : req.body.guid,
     title: req.body.title,
     description: req.body.description, 
     duration : req.body.duration,
-    date : req.body.date,
+    Date : req.body.Date,
     level : req.body.level,
-  });
+    // students: [{type: Schema.Types.ObjectId, ref: "Student"}]
+});
   try {
     await exo.save();
     res.status(201).json({
@@ -19,7 +21,7 @@ exoController.createExo = async function (req, res) {
     });
   } catch (error) {
     res.status(500).json({
-      message: "Error occured while creating exo",
+      message: "Error occured while creating exercice",
       error,
     });
   }
@@ -27,7 +29,7 @@ exoController.createExo = async function (req, res) {
 
 
 exoController.getAllExos = async function (req, res) {
-  console.log("GET /exos");
+  console.log("GET /getAllExos");
   let exos;
   try {
     exos = await exos.find(); // function find
@@ -37,11 +39,24 @@ exoController.getAllExos = async function (req, res) {
   }
 };
 
+exoController.getExo = async function (req, res) {
+  console.log("GET /getExo/:id");
+  let exo;
+  try {
+    exo = await exo.findOne({ guid :req.params.guid});
+    res.send(exo);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 exoController.editExo = async function (req, res) {
+  console.log("GET /editExo/:id");
+
   let exo;
   try { 
     exo = await exo.findOneAndUpdate(
-      {title : req.params.title},
+      {guid : req.params.guid},
       {$set : req.body},
       {new : true}
     );
@@ -58,9 +73,11 @@ exoController.editExo = async function (req, res) {
 };
 
 exoController.deleteExo = async function (req, res) {
+  console.log("GET /deleteExo/:id");
+
   let exo;
   try { 
-    exo = await exo.findOneAndDelete({id : req.params.id} )
+    exo = await exo.findOneAndDelete({guid : req.params.guid} )
     if (exo) {
       res.status(200).send("exo deleted successfully");
     }else{
@@ -71,18 +88,5 @@ exoController.deleteExo = async function (req, res) {
   }
 };
 
-
-
-
-exoController.getExo = async function (req, res) {
-  console.log("GET /Exos/:id");
-  let exo;
-  try {
-    exo = await exo.findOne({ title :req.params.title});
-    res.send(exo);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
 
 module.exports = exoController;
