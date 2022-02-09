@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 const exoRouter = require("./Routes/exo.router");
 const studentRouter = require("./Routes/student.router");
+const cors = require("cors");
 
 require("dotenv").config();
 
@@ -23,9 +24,11 @@ mongoose.connect(process.env.URL, {
     console.log("connected to database MongoDb");
   });
   
-  app.use('/', exoRouter);
-  app.use('/', studentRouter);
+
+  app.use(cors())
+  app.use('/exo', exoRouter);
+  app.use('/student', studentRouter);
 
   
   
-  app.listen(Port, () => console.log(`Server connected on port ${Port}`));
+  app.listen(Port, () => console.log(`Server connected on port ${Port}`)); 

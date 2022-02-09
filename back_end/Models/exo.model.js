@@ -4,21 +4,23 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const exoSchema = new Schema({
-  // id : Number,
-  guid:Number,
   title: {
         type: String,
         required: true,
 },
     description: String, 
-    Date: Date,
     duration: Number,
-    level: String,
+    created_at :{
+      type : Date,
+      default : Date.now
+  },
+  updated_at: {
+      type : Date,
+      default : Date.now
+  },
     students: [
       {
-        firstName: String,
-        lastName: String,
-        group: String 
+        type : Schema.Types.ObjectId, ref : "student" 
       
       }]
 });

@@ -4,14 +4,14 @@ const exoController = {};
 
 
 exoController.createExo = async function (req, res) {
+  const {title, description, duration, level, students} = req.body;
+
   const exo = new Exo ({
-    guid : req.body.guid,
-    title: req.body.title,
-    description: req.body.description, 
-    duration : req.body.duration,
-    Date : req.body.Date,
-    level : req.body.level,
-    // students: [{type: Schema.Types.ObjectId, ref: "Student"}]
+    title,
+    description, 
+    duration,
+    level,
+    students
 });
   try {
     await exo.save();
@@ -29,7 +29,7 @@ exoController.createExo = async function (req, res) {
 
 
 exoController.getAllExos = async function (req, res) {
-  console.log("GET /getAllExos");
+  // console.log("GET /getAllExos");
   let exos;
   try {
     exos = await exos.find(); // function find

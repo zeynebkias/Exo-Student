@@ -5,32 +5,22 @@ const StudentController = {};
 
 
 StudentController.createStudent = async function (req, res) {
+  const {FirstName, LastName, Group, Email} = req.body;
   const student = new Student({
-    matricule : req.body.matricule,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName, 
-    group : req.body.group,
-    id : req.body.id,
-    exos : [{type: Schema.Types.ObjectId, ref: "exo"}]
+    FirstName,
+    LastName,
+    Group,
+    Email
 
   });
   try {
-    await student.save();
-
-
-    // let exo = new Exo({
-    //   guid: "First",
-    //   students: student._id   
-    // });
-
-    // exo.save();
-
-
+    await student.save(); 
 
     res.status(201).json({
       message: "Student created successfully",
       student,
     });
+
   } catch (error) {
     console.log(error);
     res.status(500).json({

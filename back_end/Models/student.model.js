@@ -4,18 +4,19 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const studentSchema = new Schema({
-    firstName: String,
-    lastName: String,
-    group: String,
 
-    exos: [{   
-        guid: Number,
-        title: String,           
-        description: String,
-        Date: Date,
-        duration: Number,
-        level: String 
-    }]
+    FirstName: String,
+    LastName: String,
+    Group: Number,
+    Email: String,
+    created_at :{
+        type : Date,
+        default : Date.now
+    },
+    updated_at: {
+        type : Date,
+        default : Date.now
+    }
 
 });
 
